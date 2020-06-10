@@ -17,7 +17,7 @@ public interface PostRepository {
 
     Completable update(Post post);
 
-    Observable<Post> getPostbyId(int id);
+    Observable<Post> getPostById(int id);
 
     Observable<List<Post>> getAllPosts();
 }
