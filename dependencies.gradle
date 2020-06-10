@@ -127,7 +127,7 @@ ext {
             archTesting  : "androidx.test:core:${testCore}"
     ]
 
-    remoteTestDependencies = [
+    remoteDependencies = [
             dagger            : "com.google.dagger:dagger:${dagger}",
             daggerCompiler    : "com.google.dagger:dagger-compiler:${dagger}",
             gson              : "com.google.code.gson:gson:${gson}",

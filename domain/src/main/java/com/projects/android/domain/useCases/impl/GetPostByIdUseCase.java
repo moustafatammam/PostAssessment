@@ -23,6 +23,6 @@ public class GetPostByIdUseCase extends AbstractObservableUseCase<Post, Integer>
 
     @Override
     public Observable<Post> buildObservableUseCase(Integer postId) {
-        return mPostRepository.getPostbyId(postId);
+        return mPostRepository.getPostById(postId);
     }
 }
