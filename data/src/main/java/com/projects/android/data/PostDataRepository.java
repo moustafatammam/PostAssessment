@@ -39,12 +39,7 @@ public class PostDataRepository implements PostRepository {
 
     @Override
     public Completable insertAll(List<Post> posts) {
-        List<DataPost> dataPostList = posts.stream().map(new Function<Post, DataPost>() {
-            @Override
-            public DataPost apply(Post post) {
-                return mDataMapperImpl.mapToDataModel(post);
-            }
-        }).collect(Collectors.toList());
+        List<DataPost> dataPostList = posts.stream().map(post -> mDataMapperImpl.mapToDataModel(post)).collect(Collectors.toList());
         return mPostDataStoreFactory.getPostCacheDataStore().saveAllPosts(dataPostList);
     }
 
