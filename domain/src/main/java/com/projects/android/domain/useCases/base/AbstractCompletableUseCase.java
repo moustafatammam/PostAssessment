@@ -1,5 +1,7 @@
 package com.projects.android.domain.useCases.base;
 
+import android.util.Log;
+
 import com.projects.android.domain.executor.PostExecutionThread;
 import com.projects.android.domain.executor.ThreadExecutor;
 
@@ -35,6 +37,7 @@ public abstract class AbstractCompletableUseCase<Params> {
         final Completable observable = this.buildCompletableUseCase(params)
                 .subscribeOn(Schedulers.from(mThreadThreadExecutor))
                 .observeOn(mPostExecutionThread.getScheduler());
+        Log.d("usecase", "2");
         addDisposable(observable.subscribeWith(observer));
     }
 

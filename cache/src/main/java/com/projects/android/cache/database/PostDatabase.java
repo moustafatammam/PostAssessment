@@ -27,6 +27,7 @@ public abstract class PostDatabase extends RoomDatabase {
     }
 
     public static PostDatabase getInstance(Context context){
+
         if(sDatabaseInstance == null){
             synchronized (LOCK){
                 sDatabaseInstance = Room.databaseBuilder(context.getApplicationContext(),

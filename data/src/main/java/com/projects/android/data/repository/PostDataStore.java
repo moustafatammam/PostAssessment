@@ -26,4 +26,6 @@ public interface PostDataStore {
     Single<Boolean> isCached(int id);
 
     Single<Boolean> isAllCached();
+
+    Observable<Integer> getCount();
 }

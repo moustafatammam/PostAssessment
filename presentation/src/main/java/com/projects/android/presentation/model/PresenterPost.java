@@ -2,6 +2,7 @@ package com.projects.android.presentation.model;
 
 public class PresenterPost {
 
+
     private int id;
     private String title;
     private String body;

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+
 import com.projects.android.domain.model.Post;
 import com.projects.android.domain.useCases.impl.GetPostByIdUseCase;
 import com.projects.android.presentation.mapper.PresenterMapperImpl;
@@ -20,7 +21,8 @@ public class GetPostByIdViewModel extends ViewModel {
     private GetPostByIdUseCase mGetPostByIdUseCase;
     private PresenterMapperImpl mPresenterMapperImpl;
 
-    private MutableLiveData<PresenterPost> postLiveData = new MutableLiveData<>();
+    public MutableLiveData<PresenterPost> postLiveData = new MutableLiveData<>();
+
 
     @Inject
     public GetPostByIdViewModel(GetPostByIdUseCase mGetPostByIdUseCase, PresenterMapperImpl mPresenterMapperImpl) {
@@ -32,6 +34,7 @@ public class GetPostByIdViewModel extends ViewModel {
         mGetPostByIdUseCase.execute(new GetPostByIdObserver(), id);
         return postLiveData;
     }
+
 
     @Override
     protected void onCleared() {

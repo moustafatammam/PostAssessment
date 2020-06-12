@@ -24,4 +24,6 @@ public interface PostCache {
     Single<Boolean> isAllCached();
 
     Single<Boolean> isCached(int id);
+
+    Observable<Integer> getCount();
 }
