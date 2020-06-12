@@ -1,5 +1,7 @@
 package com.projects.android.cache;
 
+import android.util.Log;
+
 import com.projects.android.cache.database.PostDatabase;
 import com.projects.android.cache.mapper.CacheMapperImpl;
 import com.projects.android.cache.model.CachePost;
@@ -31,7 +33,9 @@ public class PostCacheImpl implements PostCache {
     @Override
     public Completable savePost(DataPost dataPost) {
         return Completable.defer(() -> {
+            Log.d("add", "4");
             mPostDatabase.postDao().savePost(mCacheMapperImpl.mapToCached(dataPost));
+            Log.d("add", "3");
             return Completable.complete();
         });
     }
@@ -61,7 +65,9 @@ public class PostCacheImpl implements PostCache {
     @Override
     public Completable updatePost(DataPost dataPost) {
         return Completable.defer(() -> {
-            mPostDatabase.postDao().updatePost(mCacheMapperImpl.mapToCached(dataPost));
+            CachePost cachePost = mCacheMapperImpl.mapToCached(dataPost);
+            mPostDatabase.postDao().updatePost(cachePost.getTitle(), cachePost.getBody(), cachePost.getId());
+            Log.d("delete", "3");
             return Completable.complete();
         });
     }
@@ -80,8 +86,12 @@ public class PostCacheImpl implements PostCache {
 
     @Override
     public Observable<DataPost> getPostById(int id) {
+        Log.d("asdsad", "asjabdcashhhhh");
         return Observable.just(mPostDatabase.postDao().getPostById(id))
-                .map(cachePost -> mCacheMapperImpl.mapFromCached(cachePost));
+                .map(cachePost -> {
+                    Log.d("asdsad", cachePost.getTitle());
+                    return mCacheMapperImpl.mapFromCached(cachePost);
+                });
     }
 
     @Override
@@ -93,4 +103,11 @@ public class PostCacheImpl implements PostCache {
     public Single<Boolean> isCached(int id) {
         return Single.defer(() -> Single.just(mPostDatabase.postDao().getPostById(id) != null));
     }
+
+    @Override
+    public Observable<Integer> getCount() {
+        return Observable.defer(() -> Observable.just(mPostDatabase.postDao().getRowCount()));
+    }
+
+
 }

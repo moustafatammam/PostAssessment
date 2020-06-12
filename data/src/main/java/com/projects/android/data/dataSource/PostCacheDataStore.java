@@ -1,5 +1,7 @@
 package com.projects.android.data.dataSource;
 
+import android.util.Log;
+
 import com.projects.android.data.model.DataPost;
 import com.projects.android.data.repository.PostCache;
 import com.projects.android.data.repository.PostDataStore;
@@ -24,6 +26,7 @@ public class PostCacheDataStore implements PostDataStore {
 
     @Override
     public Completable savePost(DataPost dataPost) {
+        Log.d("cache","insdert");
         return mPostCache.savePost(dataPost);
     }
 
@@ -61,4 +64,11 @@ public class PostCacheDataStore implements PostDataStore {
     public Single<Boolean> isAllCached() {
         return mPostCache.isAllCached();
     }
+
+    @Override
+    public Observable<Integer> getCount() {
+        return mPostCache.getCount();
+    }
+
+
 }

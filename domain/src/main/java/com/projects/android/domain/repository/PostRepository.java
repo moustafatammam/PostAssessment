@@ -20,4 +20,6 @@ public interface PostRepository {
     Observable<Post> getPostById(int id);
 
     Observable<List<Post>> getAllPosts();
+
+    Observable<Integer> getCount();
 }

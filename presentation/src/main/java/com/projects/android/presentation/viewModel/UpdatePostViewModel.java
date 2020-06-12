@@ -1,5 +1,7 @@
 package com.projects.android.presentation.viewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -41,12 +43,14 @@ public class UpdatePostViewModel extends ViewModel {
         @Override
         public void onComplete() {
             String updateToastMsg = "Post updated successfully";
+            Log.d("update", "done");
             updatePostCompletableLiveData.postValue(updateToastMsg);
+            Log.d("update", "done");
         }
 
         @Override
         public void onError(Throwable e) {
-
+            Log.d("update", e.getMessage());
         }
     }
 }

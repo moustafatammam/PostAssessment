@@ -1,5 +1,7 @@
 package com.projects.android.presentation.viewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
@@ -21,6 +23,7 @@ public class GetAllPostsViewModel extends ViewModel {
     private PresenterMapperImpl mPresenterMapperImpl;
 
     private MutableLiveData<List<PresenterPost>> postListLiveData = new MutableLiveData<>();
+    private MutableLiveData<Integer> count = new MutableLiveData<>();
 
     @Inject
     public GetAllPostsViewModel(GetAllPostsUseCase mGetAllPostsUseCase, PresenterMapperImpl mPresenterMapperImpl) {
@@ -32,6 +35,7 @@ public class GetAllPostsViewModel extends ViewModel {
     private void executeUseCase(){
         mGetAllPostsUseCase.execute(new GetAllPostsObserver(), null);
     }
+
 
     public MutableLiveData<List<PresenterPost>> getPostListLiveData() {
         return postListLiveData;
@@ -50,15 +54,17 @@ public class GetAllPostsViewModel extends ViewModel {
             List<PresenterPost> prePostList = posts.stream().map(post -> mPresenterMapperImpl.mapToPresenterModel(post))
                     .collect(Collectors.toList());
             postListLiveData.postValue(prePostList);
+
         }
 
         @Override
         public void onError(Throwable e) {
-
+            Log.d("GetAllPostsViewModel", e.getMessage());
         }
 
         @Override
         public void onComplete() {
+            Log.d("GetAllPostsViewModel", "completed");
 
         }
     }

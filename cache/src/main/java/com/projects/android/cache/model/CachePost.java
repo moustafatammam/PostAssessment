@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "post")
 public class CachePost {
 
+
     @PrimaryKey
     private int id;
 

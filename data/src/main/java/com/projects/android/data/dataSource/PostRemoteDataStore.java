@@ -62,4 +62,10 @@ public class PostRemoteDataStore implements PostDataStore {
     public Single<Boolean> isAllCached() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public Observable<Integer> getCount() {
+        throw new UnsupportedOperationException();
+    }
+
 }

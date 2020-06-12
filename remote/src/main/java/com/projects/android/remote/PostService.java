@@ -17,20 +17,19 @@ import retrofit2.http.Path;
 
 public interface PostService {
 
-    @GET
+    @GET(".")
     Observable<List<RemotePost>> getAllPosts();
 
-    @GET("/{id}")
+    @GET("{id}")
     Observable<RemotePost> getPostById(@Path("id") int id);
 
-    @POST
-    @FormUrlEncoded
-    Single<RemotePost> savePost(@Body RemotePost remotePost);
+    @POST()
+    Completable savePost(@Body RemotePost remotePost);
 
-    @PUT("/{id}")
+    @PUT("{id}")
     Completable updatePost(@Path("id") int id, @Body RemotePost remotePost);
 
-    @DELETE("/{id}")
+    @DELETE("{id}")
     Completable deletePost(@Path("id") int id);
 
 }

@@ -1,5 +1,7 @@
 package com.projects.android.domain.useCases.impl;
 
+import android.util.Log;
+
 import com.projects.android.domain.executor.PostExecutionThread;
 import com.projects.android.domain.executor.ThreadExecutor;
 import com.projects.android.domain.model.Post;
@@ -23,6 +25,7 @@ public class AddPostUseCase extends AbstractCompletableUseCase<Post> {
 
     @Override
     public Completable buildCompletableUseCase(Post post) {
+        Log.d("usecase", "1");
         return mPostRepository.insert(post);
     }
 }
