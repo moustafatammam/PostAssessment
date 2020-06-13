@@ -1,0 +1,71 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.projects.android.postassessment"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+8-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="29" />
+9-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:5:5-66
+11-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:5:22-64
+12
+13    <application
+13-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:7:5-23:19
+14        android:name="com.projects.android.postassessment.PostApplication"
+14-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:8:9-40
+15        android:allowBackup="true"
+15-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:9:9-35
+16        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+16-->[androidx.core:core:1.1.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\7f6c41cc2a14c0fbaa8d0166c17dc544\core-1.1.0\AndroidManifest.xml:24:18-86
+17        android:icon="@mipmap/ic_launcher"
+17-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:10:9-43
+18        android:label="@string/app_name"
+18-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:11:9-41
+19        android:roundIcon="@mipmap/ic_launcher_round"
+19-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:12:9-54
+20        android:supportsRtl="true"
+20-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:13:9-35
+21        android:theme="@style/AppTheme" >
+21-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:14:9-40
+22        <activity android:name="com.projects.android.postassessment.userInterface.activities.MainActivity" >
+22-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:16:9-22:20
+22-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:16:19-72
+23            <intent-filter>
+23-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:17:13-21:29
+24                <action android:name="android.intent.action.MAIN" />
+24-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:18:17-69
+24-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:18:25-66
+25
+26                <category android:name="android.intent.category.LAUNCHER" />
+26-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:20:17-77
+26-->S:\Moustafa\PostAssessment\app-ui\src\main\AndroidManifest.xml:20:27-74
+27            </intent-filter>
+28        </activity>
+29
+30        <provider
+30-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\14a502eb64e42adb43f297b05d7981c0\lifecycle-process-2.2.0\AndroidManifest.xml:25:9-29:43
+31            android:name="androidx.lifecycle.ProcessLifecycleOwnerInitializer"
+31-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\14a502eb64e42adb43f297b05d7981c0\lifecycle-process-2.2.0\AndroidManifest.xml:26:13-79
+32            android:authorities="com.projects.android.postassessment.lifecycle-process"
+32-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\14a502eb64e42adb43f297b05d7981c0\lifecycle-process-2.2.0\AndroidManifest.xml:27:13-69
+33            android:exported="false"
+33-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\14a502eb64e42adb43f297b05d7981c0\lifecycle-process-2.2.0\AndroidManifest.xml:28:13-37
+34            android:multiprocess="true" />
+34-->[androidx.lifecycle:lifecycle-process:2.2.0] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\14a502eb64e42adb43f297b05d7981c0\lifecycle-process-2.2.0\AndroidManifest.xml:29:13-40
+35
+36        <service
+36-->[androidx.room:room-runtime:2.2.5] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\a9bb9574960ac3d8b89250e8b7c24155\room-runtime-2.2.5\AndroidManifest.xml:25:9-28:40
+37            android:name="androidx.room.MultiInstanceInvalidationService"
+37-->[androidx.room:room-runtime:2.2.5] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\a9bb9574960ac3d8b89250e8b7c24155\room-runtime-2.2.5\AndroidManifest.xml:26:13-74
+38            android:directBootAware="true"
+38-->[androidx.room:room-runtime:2.2.5] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\a9bb9574960ac3d8b89250e8b7c24155\room-runtime-2.2.5\AndroidManifest.xml:27:13-43
+39            android:exported="false" />
+39-->[androidx.room:room-runtime:2.2.5] C:\Users\armag\.gradle\caches\transforms-2\files-2.1\a9bb9574960ac3d8b89250e8b7c24155\room-runtime-2.2.5\AndroidManifest.xml:28:13-37
+40    </application>
+41
+42</manifest>

@@ -1,0 +1,2 @@
+com.projects.android.domain
+string app_name

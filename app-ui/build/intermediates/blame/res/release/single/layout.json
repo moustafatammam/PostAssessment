@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\fragment_edit_post.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\fragment_edit_post.xml"
+    },
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\post_item.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\post_item.xml"
+    },
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\fragment_create_post.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\fragment_create_post.xml"
+    },
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\fragment_post_details.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\fragment_post_details.xml"
+    },
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\fragment_post_list.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\fragment_post_list.xml"
+    },
+    {
+        "merged": "S:\\Moustafa\\PostAssessment\\app-ui\\build\\intermediates\\incremental\\mergeReleaseResources\\stripped.dir\\layout\\activity_main.xml",
+        "source": "S:\\Moustafa\\PostAssessment\\app-ui\\src\\main\\res\\layout\\activity_main.xml"
+    }
+]

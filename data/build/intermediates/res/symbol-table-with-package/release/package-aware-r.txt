@@ -1,0 +1,2 @@
+com.projects.android.data
+string app_name
