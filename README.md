@@ -60,3 +60,6 @@ it has dagger modules to provide and bind dependencies when needed.
 The whole application is build upon the observable pattern using RXJava's Observables and Completables.
 
 Each layer has its model and a mapper interface to map each model to their respective layer.
+
+Each layer is a module to increase build time, and easy to reuse.
+
