@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">PostAssessment</string>
+    <string name="create_a_new_post">Create a new post</string>
+    <string name="title_hint">Title</string>
+    <string name="enter_description_hint">Enter Description</string>
+    <string name="create_button">Create</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="title_hint_edit_screen">Title</string>
+    <string name="description_hint">Description</string>
+    <string name="update_button">Update</string>
+    <string name="title_details">Title</string>
+    <string name="description">Description</string>
+    <string name="edit_button">edit_button</string>
+    <string name="delete_button">delete_button</string>
+    <string name="swipe_handle">swipe_handle</string>
 </resources>

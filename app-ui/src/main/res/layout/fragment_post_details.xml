@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="postDetailsViewModel"
-            type="com.projects.android.presentation.viewModel.GetPostByIdViewModel" />
-    </data>
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -18,10 +11,10 @@
             android:id="@+id/constraint"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/detail_border_view"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="@drawable/detail_border_view">
+            app:layout_constraintTop_toTopOf="parent">
 
             <TextView
                 android:id="@+id/title_label"
@@ -31,7 +24,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="6dp"
                 android:fontFamily="sans-serif-medium"
-                android:text="Title"
+                android:text="@string/title_details"
                 android:textColor="@color/black"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -44,8 +37,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:layout_marginBottom="12dp"
                 android:layout_marginEnd="6dp"
+                android:layout_marginBottom="12dp"
                 android:fontFamily="sans-serif"
                 android:textColor="@color/black"
                 android:textSize="16sp"
@@ -53,7 +46,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/title_label"
                 app:layout_constraintTop_toBottomOf="@+id/title_label"
-
                 tools:text="Covid-19. A Pandemic" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -61,18 +53,17 @@
             android:id="@+id/body_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="6dp"
             android:fontFamily="sans-serif-medium"
-            android:text="Description"
+            android:text="@string/description"
             android:textColor="@color/black"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraint" />
-
 
 
         <it.mike5v.viewmoretextview.ViewMoreTextView
@@ -82,15 +73,15 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="6dp"
             android:fontFamily="sans-serif"
+            android:gravity="start"
             android:textSize="16sp"
-            android:gravity="left"
             app:duration="500"
-            app:ellipsizeTextColor ="@color/create_green"
             app:ellipsizeText="Read More"
-            app:visibleLines="3"
+            app:ellipsizeTextColor="@color/create_green"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@+id/body_label"
-            app:layout_constraintTop_toBottomOf="@+id/body_label" />
+            app:layout_constraintTop_toBottomOf="@+id/body_label"
+            app:visibleLines="3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

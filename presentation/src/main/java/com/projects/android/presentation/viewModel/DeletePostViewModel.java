@@ -1,5 +1,7 @@
 package com.projects.android.presentation.viewModel;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -46,7 +48,7 @@ public class DeletePostViewModel extends ViewModel {
 
         @Override
         public void onError(Throwable e) {
-
+            Log.e("DeletePostViewModel", e.getMessage());
         }
     }
 }

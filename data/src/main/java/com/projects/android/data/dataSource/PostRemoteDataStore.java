@@ -13,6 +13,9 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * an implementation to the PostDataStore interface that defines how to use the remote data
+ */
 public class PostRemoteDataStore implements PostDataStore {
 
     private PostRemote mPostRemote;

@@ -59,7 +59,7 @@ public class GetAllPostsViewModel extends ViewModel {
 
         @Override
         public void onError(Throwable e) {
-            Log.d("GetAllPostsViewModel", e.getMessage());
+            Log.e("GetAllPostsViewModel", e.getMessage());
         }
 
         @Override

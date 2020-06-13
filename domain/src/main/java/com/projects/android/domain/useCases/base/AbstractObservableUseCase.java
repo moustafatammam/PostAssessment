@@ -9,9 +9,9 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
 
-/*abstract useCase that returns a completable
-each implementation will return the result using DisposableObserver, it will execute in a background thread
-and post the result in the ui thread
+/**
+ * @param <T>      the model type that the USeCAse will use when implementing this class
+ * @param <Params> nthe params you will use to build the UseCase
  */
 public abstract class AbstractObservableUseCase<T, Params> {
 
@@ -27,12 +27,18 @@ public abstract class AbstractObservableUseCase<T, Params> {
     }
 
 
-    //builds a useCase that will return an Observable
+    /**
+     * @param params the params you will use to build the completable
+     * @return an Observable to check if the task is done
+     */
     public abstract Observable<T> buildObservableUseCase(Params params);
 
-    //executes the current useCase
-    public void execute(DisposableObserver<T> observer, Params params){
-        if (observer == null){
+    /**
+     * @param observer the observer that will subscribe to the Observable
+     * @param params   the params you will use to build the Observable
+     */
+    public void execute(DisposableObserver<T> observer, Params params) {
+        if (observer == null) {
             throw new NullPointerException();
         }
         final Observable<T> observable = this.buildObservableUseCase(params)
@@ -42,17 +48,23 @@ public abstract class AbstractObservableUseCase<T, Params> {
     }
 
 
-    // disposes from the current compositeDisposable
-    public void dispose(){
-        if(!mCompositeDisposable.isDisposed()){
+    /**
+     * dispose of the compositeDisposable after finishing
+     */
+    public void dispose() {
+        if (!mCompositeDisposable.isDisposed()) {
             mCompositeDisposable.dispose();
         }
     }
 
-    private void addDisposable(Disposable disposable){
-        if(disposable == null){
+    /**
+     *
+     * @param disposable a link between observable and its observer, is disposed after finishing
+     */
+    private void addDisposable(Disposable disposable) {
+        if (disposable == null) {
             throw new NullPointerException();
-        }else if (mCompositeDisposable == null){
+        } else if (mCompositeDisposable == null) {
             throw new NullPointerException();
         }
         mCompositeDisposable.add(disposable);

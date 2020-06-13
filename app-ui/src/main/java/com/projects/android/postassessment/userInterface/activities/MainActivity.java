@@ -35,9 +35,13 @@ public class MainActivity extends AppCompatActivity {
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
         navController = Navigation.findNavController(this, R.id.nav_host);
-
         NavigationUI.setupActionBarWithNavController(this, navController);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24px);
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        navController.navigateUp();
     }
 
     @Override

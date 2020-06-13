@@ -22,6 +22,11 @@ public class DeletePostUseCase extends AbstractCompletableUseCase<Post> {
     }
 
 
+    /**
+     *
+     * @param post the model that will be deleted from the server and the database
+     * @return a completable that check if the task is completed
+     */
     @Override
     public Completable buildCompletableUseCase(Post post) {
         return mPostRepository.delete(post);

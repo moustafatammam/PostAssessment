@@ -23,9 +23,13 @@ public class AddPostUseCase extends AbstractCompletableUseCase<Post> {
         this.mPostRepository = mPostRepository;
     }
 
+    /**
+     *
+     * @param post the model that will be added from the server and the database
+     * @return a completable that check if the task is completed
+     */
     @Override
     public Completable buildCompletableUseCase(Post post) {
-        Log.d("usecase", "1");
         return mPostRepository.insert(post);
     }
 }

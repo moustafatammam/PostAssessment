@@ -6,7 +6,10 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
-//an interface to communicate with the cache layer
+/**
+ * an interface that defines how other layers communicates with it
+ * it is implemented by the cache layer
+ */
 public interface PostCache {
 
     Completable savePost(DataPost dataPost);

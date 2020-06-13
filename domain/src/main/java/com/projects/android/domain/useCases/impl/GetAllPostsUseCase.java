@@ -26,6 +26,11 @@ public class GetAllPostsUseCase extends AbstractObservableUseCase<List<Post>, Vo
         this.mPostRepository = mPostRepository;
     }
 
+    /**
+     *
+     * @param aVoid this use case does not need params
+     * @return list of model post that is wrapped in an observable
+     */
     @Override
     public Observable<List<Post>> buildObservableUseCase(Void aVoid) {
         return mPostRepository.getAllPosts();

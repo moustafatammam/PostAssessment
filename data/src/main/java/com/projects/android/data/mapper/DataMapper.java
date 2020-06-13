@@ -1,6 +1,10 @@
 package com.projects.android.data.mapper;
 
-//this interface implementation should map different models from different layers
+/**
+ *
+ * @param <T> the model post of the data layer
+ * @param <V> the model post of the domain layer
+ */
 public interface DataMapper<T, V> {
 
     V mapFromDataModel(T t);

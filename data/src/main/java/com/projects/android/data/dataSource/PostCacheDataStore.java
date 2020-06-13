@@ -1,7 +1,5 @@
 package com.projects.android.data.dataSource;
 
-import android.util.Log;
-
 import com.projects.android.data.model.DataPost;
 import com.projects.android.data.repository.PostCache;
 import com.projects.android.data.repository.PostDataStore;
@@ -14,6 +12,9 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * an implementation to the PostDataStore interface that defines how to cache data
+ */
 public class PostCacheDataStore implements PostDataStore {
 
     private PostCache mPostCache;
@@ -26,7 +27,6 @@ public class PostCacheDataStore implements PostDataStore {
 
     @Override
     public Completable savePost(DataPost dataPost) {
-        Log.d("cache","insdert");
         return mPostCache.savePost(dataPost);
     }
 

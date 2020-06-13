@@ -26,14 +26,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.projects.android.cache.PostCacheImpl;
 import com.projects.android.postassessment.R;
 import com.projects.android.postassessment.databinding.FragmentPostListBinding;
 import com.projects.android.postassessment.mapper.ViewMapperImpl;
 import com.projects.android.postassessment.model.ViewPost;
 import com.projects.android.postassessment.userInterface.PostCallBack;
-import com.projects.android.postassessment.userInterface.PostListener;
-import com.projects.android.postassessment.userInterface.activities.MainActivity;
 import com.projects.android.postassessment.userInterface.adapter.PostListAdapter;
 import com.projects.android.presentation.ViewModelFactory;
 import com.projects.android.presentation.model.PresenterPost;
@@ -51,14 +48,9 @@ import static androidx.constraintlayout.widget.Constraints.TAG;
 public class PostListFragment extends Fragment implements PostCallBack {
 
     private RecyclerView mRecyclerView;
-
-
-    PostListAdapter mPostListAdapter = new PostListAdapter(this);
-
-
+    private PostListAdapter mPostListAdapter;
     private FragmentPostListBinding fragmentPostListBinding;
     private FloatingActionButton mFloatingActionButton;
-
     private GetAllPostsViewModel mGetAllPostsViewModel;
     private DeletePostViewModel mDeletePostViewModel;
     private ViewModelFactory mViewModelFactory;
@@ -80,21 +72,14 @@ public class PostListFragment extends Fragment implements PostCallBack {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         mGetAllPostsViewModel = new ViewModelProvider(this, mViewModelFactory).get(GetAllPostsViewModel.class);
-
-
         mDeletePostViewModel = new ViewModelProvider(this, mViewModelFactory).get(DeletePostViewModel.class);
 
         mFloatingActionButton = fragmentPostListBinding.addPostFab;
-        mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(view).navigate(R.id.action_postListFragment_to_createPostFragment);
+        mFloatingActionButton.setOnClickListener(view -> Navigation.findNavController(view).navigate(R.id.action_postListFragment_to_createPostFragment));
 
-
-            }
-        });
-
+        setupRecyclerView();
 
         mGetAllPostsViewModel.getPostListLiveData().observe(this, new Observer<List<PresenterPost>>() {
             @Override
@@ -106,45 +91,32 @@ public class PostListFragment extends Fragment implements PostCallBack {
                     }
                 }).collect(Collectors.toList());
                 mPostListAdapter.submitList(viewPostList);
-
             }
         });
-        setupRecyclerView();
-
     }
 
     private void setupRecyclerView() {
+        mPostListAdapter = new PostListAdapter(this);
         mRecyclerView = fragmentPostListBinding.postListRecyclerView;
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setAdapter(mPostListAdapter);
     }
 
 
-    public void setupAlertDialog(ViewPost viewPost) {
+    private void setupAlertDialog(ViewPost viewPost) {
         AlertDialog.Builder deleteAlert = new AlertDialog.Builder(getContext());
         deleteAlert.setTitle("Delete Post");
         deleteAlert.setMessage("You are about to delete this post. Are you sure you want to continue?");
-        deleteAlert.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (isInternetAvailable(getContext())) { //returns true if internet available
-                    mDeletePostViewModel.deletePost(mViewMapperImpl.mapFromViewPost(viewPost)).observe(getViewLifecycleOwner(), new Observer<String>() {
-                        @Override
-                        public void onChanged(String s) {
-                            mPostListAdapter.notifyDataSetChanged();
-                            Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                } else {
-                    Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
-                }
+        deleteAlert.setPositiveButton("DELETE", (dialogInterface, i) -> {
+            if (isInternetAvailable(getContext())) { //returns true if internet available
+                mDeletePostViewModel.deletePost(mViewMapperImpl.mapFromViewPost(viewPost)).observe(getViewLifecycleOwner(), s -> {
+                    mPostListAdapter.notifyDataSetChanged();
+                    Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                });
+            } else {
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
-        }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-
-            }
-        });
+        }).setNegativeButton("cancel", (dialog, which) -> dialog.dismiss());
         deleteAlert.show();
     }
 
@@ -164,7 +136,7 @@ public class PostListFragment extends Fragment implements PostCallBack {
 
     }
 
-    public static boolean isInternetAvailable(Context context) {
+    private static boolean isInternetAvailable(Context context) {
         NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
 

@@ -43,14 +43,13 @@ public class UpdatePostViewModel extends ViewModel {
         @Override
         public void onComplete() {
             String updateToastMsg = "Post updated successfully";
-            Log.d("update", "done");
             updatePostCompletableLiveData.postValue(updateToastMsg);
-            Log.d("update", "done");
+
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d("update", e.getMessage());
+            Log.d("UpdatePostViewModel", e.getMessage());
         }
     }
 }

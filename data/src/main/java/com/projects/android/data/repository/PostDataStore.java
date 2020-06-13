@@ -9,6 +9,10 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * an interface that defines how other dataSources behaves
+ * it is implemented by the cacheSource and the remoteSource
+ */
 public interface PostDataStore {
 
     Completable savePost(DataPost dataPost);
