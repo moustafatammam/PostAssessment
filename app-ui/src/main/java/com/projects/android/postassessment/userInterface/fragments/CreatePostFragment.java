@@ -1,5 +1,7 @@
 package com.projects.android.postassessment.userInterface.fragments;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,11 +37,15 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
     private EditText titleCreateEditeText;
     private EditText bodyCreateEditeText;
 
+    private Button closeButton;
+
     private AddPostViewModel mAddPostViewModel;
     private ViewModelFactory mViewModelFactory;
     private ViewMapperImpl mViewMapperImpl;
 
+
     int count;
+
 
 
     @Inject
@@ -61,8 +67,20 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
         super.onActivityCreated(savedInstanceState);
 
         setupViews();
+        View touchOutside = getDialog().getWindow()
+                .getDecorView()
+                .findViewById(com.google.android.material.R.id.touch_outside);
+
+        touchOutside.setOnClickListener(null);
 
         mAddPostViewModel = new ViewModelProvider(this, mViewModelFactory).get(AddPostViewModel.class);
+
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_createPostFragment_to_postListFragment);
+            }
+        });
 
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +94,7 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
 
     private void setupViews(){
         createButton = fragmentCreatePostBinding.createButton;
+        closeButton = fragmentCreatePostBinding.exitEditScreenButton;
         titleCreateEditeText = fragmentCreatePostBinding.createTitle;
         bodyCreateEditeText = fragmentCreatePostBinding.createBody;
     }
@@ -105,7 +124,8 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
             focusView.requestFocus();
 
         }else{
-            Log.d("asjgask", Integer.toString(count) );
+            Log.d("count", Integer.toString(count) );
+
             ViewPost viewPost = new ViewPost(++count, titleText, bodyText);
             addPost(viewPost);
             Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_createPostFragment_to_postListFragment);
@@ -115,12 +135,13 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
         this.count = count;
     }
 
+
+
     public void count(){
         mAddPostViewModel.getGetCountLiveData().observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(Integer integer) {
                 setCount(integer);
-
             }
         });
     }

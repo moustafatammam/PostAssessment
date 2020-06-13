@@ -2,6 +2,7 @@ package com.projects.android.postassessment.userInterface.fragments;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,13 +43,13 @@ import java.util.stream.Collectors;
 
 import javax.inject.Inject;
 
-public class PostListFragment extends Fragment implements PostCallBack{
+public class PostListFragment extends Fragment implements PostCallBack {
 
     private RecyclerView mRecyclerView;
 
 
-
     PostListAdapter mPostListAdapter = new PostListAdapter(this);
+
 
     private FragmentPostListBinding fragmentPostListBinding;
     private FloatingActionButton mFloatingActionButton;
@@ -74,10 +75,7 @@ public class PostListFragment extends Fragment implements PostCallBack{
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-
         mGetAllPostsViewModel = new ViewModelProvider(this, mViewModelFactory).get(GetAllPostsViewModel.class);
-
 
 
         mDeletePostViewModel = new ViewModelProvider(this, mViewModelFactory).get(DeletePostViewModel.class);
@@ -86,12 +84,8 @@ public class PostListFragment extends Fragment implements PostCallBack{
         mFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                try {
-                    Navigation.findNavController(view).navigate(R.id.action_postListFragment_to_createPostFragment);
-                }catch (IllegalArgumentException e){
-                    e.printStackTrace();
-                    Log.d("a", e.getMessage());
-                }
+                Navigation.findNavController(view).navigate(R.id.action_postListFragment_to_createPostFragment);
+
 
             }
         });
@@ -107,7 +101,7 @@ public class PostListFragment extends Fragment implements PostCallBack{
                     }
                 }).collect(Collectors.toList());
                 mPostListAdapter.submitList(viewPostList);
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle("My Posts");
+
             }
         });
         setupRecyclerView();

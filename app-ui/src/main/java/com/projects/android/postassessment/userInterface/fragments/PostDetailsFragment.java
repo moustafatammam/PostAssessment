@@ -57,9 +57,14 @@ public class PostDetailsFragment extends Fragment {
         mGetPostByIdViewModel.getPostByIdLiveData(postId).observe(this, new Observer<PresenterPost>() {
             @Override
             public void onChanged(PresenterPost presenterPost) {
-                ((MainActivity) getActivity()).getSupportActionBar().setTitle("Post Details");
                 fragmentPostDetailsBinding.title.setText(mViewMapperImpl.mapToViewUser(presenterPost).getTitle());
                 fragmentPostDetailsBinding.body.setText(mViewMapperImpl.mapToViewUser(presenterPost).getBody());
+                fragmentPostDetailsBinding.body.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        fragmentPostDetailsBinding.body.toggle();
+                    }
+                });
 
             }
         });

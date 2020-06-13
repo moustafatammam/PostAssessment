@@ -73,7 +73,6 @@ public class PostRemoteImpl implements PostRemote {
 
     @Override
     public Observable<DataPost> getPostById(int id) {
-        Log.d("asdsad", "asjabd");
         return mPostService.getPostById(id)
                 .map(remotePost -> mRemoteMapperImpl.mapFromRemoteModel(remotePost));
 

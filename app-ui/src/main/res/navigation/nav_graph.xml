@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/postListFragment"
         android:name="com.projects.android.postassessment.userInterface.fragments.PostListFragment"
-        android:label="fragment_post_list"
+        android:label="My Posts"
         tools:layout="@layout/fragment_post_list" >
         <action
             android:id="@+id/action_postListFragment_to_postDetailsFragment"
@@ -27,7 +27,7 @@
     <fragment
         android:id="@+id/postDetailsFragment"
         android:name="com.projects.android.postassessment.userInterface.fragments.PostDetailsFragment"
-        android:label="PostDetailsFragment">
+        android:label="Post Details">
         <argument
             android:name="postId"
             app:argType="integer" />

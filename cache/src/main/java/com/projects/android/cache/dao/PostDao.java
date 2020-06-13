@@ -20,14 +20,14 @@ public interface PostDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void saveAllPosts(List<CachePost> cachePosts);
 
-    @Query("SELECT * FROM post ORDER BY id DESC")
+    @Query("SELECT * FROM post WHERE isDeleted = 0 ORDER BY id DESC")
     List<CachePost> getAllPost();
 
     @Query("SELECT * FROM post WHERE post.id = :postId")
     CachePost getPostById(int postId);
 
-    @Delete
-    void deletePost(CachePost cachePost);
+    @Query("UPDATE post SET isDeleted = 1 WHERE id = :postID")
+    void deletePost(int postID);
 
     @Query("SELECT COUNT(*) FROM post")
     Integer getRowCount();

@@ -10,6 +10,8 @@ public class CachePost {
     @PrimaryKey
     private int id;
 
+    private int isDeleted;
+
     private String title;
     private String body;
 
@@ -41,5 +43,13 @@ public class CachePost {
 
     public void setBody(String body) {
         this.body = body;
+    }
+
+    public int getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(int isDeleted) {
+        this.isDeleted = isDeleted;
     }
 }
