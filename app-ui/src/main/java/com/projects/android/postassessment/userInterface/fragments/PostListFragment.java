@@ -1,8 +1,11 @@
 package com.projects.android.postassessment.userInterface.fragments;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -42,6 +45,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 import javax.inject.Inject;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class PostListFragment extends Fragment implements PostCallBack {
 
@@ -122,13 +127,17 @@ public class PostListFragment extends Fragment implements PostCallBack {
         deleteAlert.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                mDeletePostViewModel.deletePost(mViewMapperImpl.mapFromViewPost(viewPost)).observe(getViewLifecycleOwner(), new Observer<String>() {
-                    @Override
-                    public void onChanged(String s) {
-                        mPostListAdapter.notifyDataSetChanged();
-                        Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
-                    }
-                });
+                if (isInternetAvailable(getContext())) { //returns true if internet available
+                    mDeletePostViewModel.deletePost(mViewMapperImpl.mapFromViewPost(viewPost)).observe(getViewLifecycleOwner(), new Observer<String>() {
+                        @Override
+                        public void onChanged(String s) {
+                            mPostListAdapter.notifyDataSetChanged();
+                            Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } else {
+                    Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
+                }
             }
         }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -147,7 +156,6 @@ public class PostListFragment extends Fragment implements PostCallBack {
     @Override
     public void onDeleteButtonClicked(ViewPost viewPost, View view, RecyclerView.ViewHolder viewHolder) {
         setupAlertDialog(viewPost);
-
     }
 
     @Override
@@ -156,32 +164,23 @@ public class PostListFragment extends Fragment implements PostCallBack {
 
     }
 
+    public static boolean isInternetAvailable(Context context) {
+        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
 
-
-  /*  public class PostItemListener implements PostCallBack {
-
-        @Inject
-        public PostItemListener() {
-        }
-
-
-        @Override
-        public void onPostClicked(ViewPost viewPost, View view) {
-            Navigation.findNavController(view).navigate(PostListFragmentDirections.actionPostListFragmentToPostDetailsFragment(viewPost.getId()));
-        }
-
-        @Override
-        public void onDeleteButtonClicked(ViewPost viewPost, View view) {
-        }
-
-        @Override
-        public void onEditButtonClicked(View view) {
-            Navigation.findNavController(view).navigate(R.id.action_postListFragment_to_editPostFragment);
+        if (info == null) {
+            Log.d(TAG, "no internet connection");
+            return false;
+        } else {
+            if (info.isConnected()) {
+                Log.d(TAG, " internet connection available...");
+                return true;
+            } else {
+                Log.d(TAG, " internet connection");
+                return true;
+            }
 
         }
     }
-
-   */
-
 
 }

@@ -85,7 +85,7 @@ public class AddPostViewModel extends ViewModel {
         public void onNext(Integer integer) {
             Log.d("error", "Errorr");
             getCountLiveData.postValue(integer);
-            Log.d("error", "Errorr5");
+            Log.d("error", "Errorr");
         }
 
         @Override

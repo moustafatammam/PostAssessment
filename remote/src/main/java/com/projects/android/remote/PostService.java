@@ -23,7 +23,7 @@ public interface PostService {
     @GET("{id}")
     Observable<RemotePost> getPostById(@Path("id") int id);
 
-    @POST()
+    @POST(".")
     Completable savePost(@Body RemotePost remotePost);
 
     @PUT("{id}")
