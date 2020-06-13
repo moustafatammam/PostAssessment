@@ -46,6 +46,7 @@ dependencies {
     implementation uiDependencies.navigationFragment
     implementation uiDependencies.navigationUI
     implementation uiDependencies.swipeItem
+    implementation uiDependencies.readMoreTextView
     implementation uiDependencies.material
     implementation uiDependencies.rxAndroid
     implementation uiDependencies.dagger

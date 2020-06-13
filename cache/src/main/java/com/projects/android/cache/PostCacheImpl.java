@@ -57,7 +57,7 @@ public class PostCacheImpl implements PostCache {
     @Override
     public Completable deletePost(DataPost dataPost) {
         return Completable.defer(() -> {
-            mPostDatabase.postDao().deletePost(mCacheMapperImpl.mapToCached(dataPost));
+            mPostDatabase.postDao().deletePost(mCacheMapperImpl.mapToCached(dataPost).getId());
             return Completable.complete();
         });
     }

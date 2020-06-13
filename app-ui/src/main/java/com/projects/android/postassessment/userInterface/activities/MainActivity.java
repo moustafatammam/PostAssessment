@@ -6,6 +6,8 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.NavigationUI;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import com.projects.android.postassessment.R;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         navController = Navigation.findNavController(this, R.id.nav_host);
 
         NavigationUI.setupActionBarWithNavController(this, navController);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24px);
     }
 
     @Override
