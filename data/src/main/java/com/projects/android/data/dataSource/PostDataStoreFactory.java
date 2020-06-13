@@ -5,15 +5,16 @@ import com.projects.android.data.repository.PostDataStore;
 
 import javax.inject.Inject;
 
+/**
+ * a single source of truth that decides which source will be used
+ */
 public class PostDataStoreFactory {
 
-    private PostCache mPostCache;
     private PostCacheDataStore mPostCacheDataStore;
     private PostRemoteDataStore mPostRemoteDataStore;
 
     @Inject
-    public PostDataStoreFactory(PostCache mPostCache, PostCacheDataStore mPostCacheDataStore, PostRemoteDataStore mPostRemoteDataStore) {
-        this.mPostCache = mPostCache;
+    public PostDataStoreFactory(PostCacheDataStore mPostCacheDataStore, PostRemoteDataStore mPostRemoteDataStore) {
         this.mPostCacheDataStore = mPostCacheDataStore;
         this.mPostRemoteDataStore = mPostRemoteDataStore;
     }

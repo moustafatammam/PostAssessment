@@ -15,11 +15,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.projects.android.postassessment.R;
 import com.projects.android.postassessment.databinding.FragmentPostDetailsBinding;
 import com.projects.android.postassessment.mapper.ViewMapperImpl;
-import com.projects.android.postassessment.model.ViewPost;
-import com.projects.android.postassessment.userInterface.activities.MainActivity;
 import com.projects.android.presentation.ViewModelFactory;
 import com.projects.android.presentation.model.PresenterPost;
-import com.projects.android.presentation.viewModel.GetAllPostsViewModel;
 import com.projects.android.presentation.viewModel.GetPostByIdViewModel;
 
 import java.util.Objects;
@@ -32,6 +29,7 @@ public class PostDetailsFragment extends Fragment {
     private GetPostByIdViewModel mGetPostByIdViewModel;
     private ViewModelFactory mViewModelFactory;
     private ViewMapperImpl mViewMapperImpl;
+     private int postId;
 
     @Inject
     public PostDetailsFragment(ViewModelFactory mViewModelFactory, ViewMapperImpl mViewMapperImpl){
@@ -50,8 +48,7 @@ public class PostDetailsFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        int postId = PostDetailsFragmentArgs.fromBundle(Objects.requireNonNull(getArguments())).getPostId();
-
+        postId = PostDetailsFragmentArgs.fromBundle(Objects.requireNonNull(getArguments())).getPostId();
         mGetPostByIdViewModel = new ViewModelProvider(this, mViewModelFactory).get(GetPostByIdViewModel.class);
 
         mGetPostByIdViewModel.getPostByIdLiveData(postId).observe(this, new Observer<PresenterPost>() {
@@ -65,7 +62,6 @@ public class PostDetailsFragment extends Fragment {
                         fragmentPostDetailsBinding.body.toggle();
                     }
                 });
-
             }
         });
     }

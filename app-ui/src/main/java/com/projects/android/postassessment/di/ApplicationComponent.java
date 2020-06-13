@@ -26,10 +26,8 @@ public interface ApplicationComponent {
 
     @Component.Builder
     interface Builder{
-
         @BindsInstance
         Builder application(Application application);
-
         ApplicationComponent build();
     }
 

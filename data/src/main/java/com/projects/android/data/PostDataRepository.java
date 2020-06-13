@@ -20,6 +20,11 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableSource;
 import io.reactivex.Single;
 
+
+/**
+ * communicates with the domain layer by implementing PostRepository,
+ * it uses the source factory to decide how to deal with data
+ */
 public class PostDataRepository implements PostRepository {
 
     private PostDataStoreFactory mPostDataStoreFactory;
@@ -32,20 +37,31 @@ public class PostDataRepository implements PostRepository {
     }
 
 
+    /**
+     * @param post the model post that will be inserted
+     * @return first insert it to the server and then to the database and return a completable that the task is completed
+     */
     @Override
     public Completable insert(Post post) {
         Completable remoteSave = mPostDataStoreFactory.getPostRemoteDataStore().savePost(mDataMapperImpl.mapToDataModel(post));
         Completable cacheSave = mPostDataStoreFactory.getPostCacheDataStore().savePost(mDataMapperImpl.mapToDataModel(post));
-        Log.d("repo", "insert");
         return remoteSave.andThen(cacheSave);
     }
 
+    /**
+     * @param posts list to be inserted to the database after getting it from the server
+     * @return a completable that checks if the task is completed
+     */
     @Override
     public Completable insertAll(List<Post> posts) {
         List<DataPost> dataPostList = posts.stream().map(post -> mDataMapperImpl.mapToDataModel(post)).collect(Collectors.toList());
         return mPostDataStoreFactory.getPostCacheDataStore().saveAllPosts(dataPostList);
     }
 
+    /**
+     * @param post the model post that will be deleted
+     * @return first delete it from the server and then from the database and return a completable that the task is completed
+     */
     @Override
     public Completable delete(Post post) {
         Completable deleteRemote = mPostDataStoreFactory.getPostRemoteDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
@@ -53,48 +69,53 @@ public class PostDataRepository implements PostRepository {
         return deleteRemote.andThen(deleteCache);
     }
 
+    /**
+     * @param post the model post that will be updated
+     * @return first update it from the server and then from the database and return a completable that the task is completed
+     */
     @Override
     public Completable update(Post post) {
         Completable updateRemote = mPostDataStoreFactory.getPostRemoteDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
-        Log.d("delete", "1");
         Completable updateCache = mPostDataStoreFactory.getPostCacheDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
-        Log.d("delete", "2");
         return updateRemote.andThen(updateCache);
     }
 
+    /**
+     * @param id will be used to get the model
+     * @return a model post from the server if it was not in the database
+     * and insert it, if it existed in the database the method will return it from there
+     */
     @Override
     public Observable<Post> getPostById(int id) {
         return mPostDataStoreFactory.getPostCacheDataStore().isCached(id)
-                .flatMapObservable(new io.reactivex.functions.Function<Boolean, ObservableSource<? extends Post>>() {
-                    @Override
-                    public ObservableSource<? extends Post> apply(Boolean aBoolean) throws Exception {
-                        return mPostDataStoreFactory.retrieveDataStore(aBoolean).getPostById(id)
-                                .flatMap(dataPost -> {
-                                    Post post = mDataMapperImpl.mapFromDataModel(dataPost);
-                                    return insert(post).andThen(Observable.just(post));
-                                });
-                    }
-                });
+                .flatMapObservable(aBoolean -> mPostDataStoreFactory.retrieveDataStore(aBoolean).getPostById(id)
+                        .flatMap(dataPost -> {
+                            Post post = mDataMapperImpl.mapFromDataModel(dataPost);
+                            return insert(post).andThen(Observable.just(post));
+                        }));
     }
 
+    /**
+     * @return a model list of posts from the server if it was not in the database
+     * and insert it, if it existed in the database the method will return it from there
+     */
     @Override
     public Observable<List<Post>> getAllPosts() {
         return mPostDataStoreFactory.getPostCacheDataStore().isAllCached()
-                .flatMapObservable(new io.reactivex.functions.Function<Boolean, ObservableSource<? extends List<Post>>>() {
-                    @Override
-                    public ObservableSource<? extends List<Post>> apply(Boolean aBoolean) throws Exception {
-                        return mPostDataStoreFactory.retrieveDataStore(aBoolean).getAllPosts()
-                                .flatMap(dataPostList -> {
-                                    List<Post> postList = new ArrayList<>();
-                                    for (DataPost dataPost : dataPostList) {
-                                        postList.add(mDataMapperImpl.mapFromDataModel(dataPost));
-                                    }
-                                    return insertAll(postList).andThen(Observable.just(postList));
-                                });
-                    }
-                });
+                .flatMapObservable(aBoolean -> mPostDataStoreFactory.retrieveDataStore(aBoolean).getAllPosts()
+                        .flatMap(dataPostList -> {
+                            List<Post> postList = new ArrayList<>();
+                            for (DataPost dataPost : dataPostList) {
+                                postList.add(mDataMapperImpl.mapFromDataModel(dataPost));
+                            }
+                            return insertAll(postList).andThen(Observable.just(postList));
+                        }));
     }
 
+    /**
+     *
+     * @return the count of items in the database
+     */
     @Override
     public Observable<Integer> getCount() {
         return mPostDataStoreFactory.getPostCacheDataStore().getCount();

@@ -2,27 +2,20 @@ package com.projects.android.postassessment.userInterface.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.databinding.DataBindingUtil;
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
@@ -35,7 +28,6 @@ import com.projects.android.postassessment.databinding.FragmentEditPostBinding;
 import com.projects.android.postassessment.mapper.ViewMapperImpl;
 import com.projects.android.postassessment.model.ViewPost;
 import com.projects.android.presentation.ViewModelFactory;
-import com.projects.android.presentation.viewModel.GetAllPostsViewModel;
 import com.projects.android.presentation.viewModel.UpdatePostViewModel;
 
 import java.lang.reflect.Field;
@@ -55,6 +47,8 @@ public class EditPostFragment extends BottomSheetDialogFragment {
     private Button closeButton;
     private int updateId;
 
+    private View touchOutside;
+
     private UpdatePostViewModel mUpdatePostViewModel;
     private ViewModelFactory mViewModelFactory;
     private ViewMapperImpl mViewMapperImpl;
@@ -67,9 +61,9 @@ public class EditPostFragment extends BottomSheetDialogFragment {
 
     @Override
     public void setupDialog(@NonNull Dialog dialog, int style) {
-        super.setupDialog(dialog, style);BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialog;
+        super.setupDialog(dialog, style);
+        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialog;
         bottomSheetDialog.setContentView(R.layout.fragment_edit_post);
-
         try {
             Field behaviorField = bottomSheetDialog.getClass().getDeclaredField("behavior");
             behaviorField.setAccessible(true);
@@ -78,7 +72,7 @@ public class EditPostFragment extends BottomSheetDialogFragment {
 
                 @Override
                 public void onStateChanged(@NonNull View bottomSheet, int newState) {
-                    if (newState == BottomSheetBehavior.STATE_DRAGGING){
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING) {
                         behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
                     }
                 }
@@ -95,7 +89,6 @@ public class EditPostFragment extends BottomSheetDialogFragment {
     }
 
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -106,21 +99,14 @@ public class EditPostFragment extends BottomSheetDialogFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
         updateId = EditPostFragmentArgs.fromBundle(Objects.requireNonNull(getArguments())).getUpdateId();
+
         setupViews();
+
         mUpdatePostViewModel = new ViewModelProvider(this, mViewModelFactory).get(UpdatePostViewModel.class);
 
-        View touchOutside = getDialog().getWindow()
-                .getDecorView()
-                .findViewById(com.google.android.material.R.id.touch_outside);
-
-        touchOutside.setOnClickListener(null);
-        closeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
-            }
-        });
+        closeButton.setOnClickListener(view -> Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment));
 
         updateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -133,6 +119,10 @@ public class EditPostFragment extends BottomSheetDialogFragment {
     }
 
     private void setupViews() {
+        touchOutside = getDialog().getWindow()
+                .getDecorView()
+                .findViewById(com.google.android.material.R.id.touch_outside);
+        touchOutside.setOnClickListener(null);
         updateButton = fragmentEditPostBinding.createButton;
         closeButton = fragmentEditPostBinding.exitEditScreenButton;
         titleEditBox = fragmentEditPostBinding.createTitle;
@@ -166,15 +156,13 @@ public class EditPostFragment extends BottomSheetDialogFragment {
         } else {
             ViewPost viewPost = new ViewPost(updateId, titleText, bodyText);
 
-            if(isInternetAvailable(getContext())) //returns true if internet available
-            {
+            if (isInternetAvailable(getContext())) {
+                //returns true if internet available
                 updateTask(viewPost);
                 Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
-            }
-            else
-            {
+            } else {
                 Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
-                Toast.makeText(getContext(),"No Internet Connection", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "No Internet Connection", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -187,29 +175,21 @@ public class EditPostFragment extends BottomSheetDialogFragment {
             }
         });
     }
-    public static boolean isInternetAvailable(Context context)
-    {
+
+    private static boolean isInternetAvailable(Context context) {
         NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
                 context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-
-        if (info == null)
-        {
-            Log.d(TAG,"no internet connection");
+        if (info == null) {
+            Log.d(TAG, "no internet connection");
             return false;
-        }
-        else
-        {
-            if(info.isConnected())
-            {
-                Log.d(TAG," internet connection available...");
+        } else {
+            if (info.isConnected()) {
+                Log.d(TAG, " internet connection available...");
+                return true;
+            } else {
+                Log.d(TAG, " internet connection");
                 return true;
             }
-            else
-            {
-                Log.d(TAG," internet connection");
-                return true;
-            }
-
         }
     }
 }

@@ -21,6 +21,11 @@ public class UpdatePostUseCase extends AbstractCompletableUseCase<Post> {
         this.mPostRepository = mPostRepository;
     }
 
+    /**
+     *
+     * @param post the post model that will be updated to the server and the database
+     * @return ist of model post that is wrapped in an observable
+     */
     @Override
     public Completable buildCompletableUseCase(Post post) {
         return mPostRepository.update(post);

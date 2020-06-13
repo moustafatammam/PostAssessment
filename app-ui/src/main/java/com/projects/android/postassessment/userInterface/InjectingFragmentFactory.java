@@ -9,6 +9,9 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+/**
+ * a custom fragment factory to create fragments and to access their constructor for injection with dagger
+ */
 public class InjectingFragmentFactory extends FragmentFactory {
 
     private Map<Class<? extends Fragment>, Provider<Fragment>> fragmentMap;

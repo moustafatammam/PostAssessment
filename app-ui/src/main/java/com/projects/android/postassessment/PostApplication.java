@@ -12,6 +12,9 @@ import dagger.android.HasAndroidInjector;
 
 public class PostApplication extends Application implements HasAndroidInjector {
 
+    /**
+     * this field help me create a SubComponent for the activity
+     */
     @Inject
     DispatchingAndroidInjector<Object> activityDispatchingAndroidInjector;
 

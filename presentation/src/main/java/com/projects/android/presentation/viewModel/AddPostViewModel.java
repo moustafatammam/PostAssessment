@@ -5,14 +5,10 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
-import com.projects.android.domain.model.Post;
 import com.projects.android.domain.useCases.impl.AddPostUseCase;
 import com.projects.android.domain.useCases.impl.GetCountUseCase;
 import com.projects.android.presentation.mapper.PresenterMapperImpl;
 import com.projects.android.presentation.model.PresenterPost;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -40,7 +36,6 @@ public class AddPostViewModel extends ViewModel {
 
     public LiveData<String> addPost(PresenterPost presenterPost){
         mAddPostUseCase.execute(new AddPostCompletable(), mPresenterMapperImpl.mapFromPresenterModel(presenterPost));
-        Log.d("usecase", "5");
         return addPostCompletableLiveData;
     }
 
@@ -63,15 +58,12 @@ public class AddPostViewModel extends ViewModel {
         @Override
         public void onComplete() {
             String addToastMsg = "Post Added Successfully";
-            Log.d("add", "donme");
             addPostCompletableLiveData.postValue(addToastMsg);
-            Log.d("add", "donme");
-
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d("error", e.getMessage());
+            Log.e("AddPostViewModel", e.getMessage());
         }
     }
 
@@ -83,14 +75,12 @@ public class AddPostViewModel extends ViewModel {
 
         @Override
         public void onNext(Integer integer) {
-            Log.d("error", "Errorr");
             getCountLiveData.postValue(integer);
-            Log.d("error", "Errorr");
         }
 
         @Override
         public void onError(Throwable e) {
-            Log.d("error", e.getMessage());
+            Log.e("AddPostViewModel", e.getMessage());
         }
     }
 }

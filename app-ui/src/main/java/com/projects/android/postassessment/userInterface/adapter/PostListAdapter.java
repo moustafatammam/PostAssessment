@@ -1,8 +1,6 @@
 package com.projects.android.postassessment.userInterface.adapter;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -19,14 +17,12 @@ import com.projects.android.postassessment.userInterface.PostCallBack;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostListViewHolder>{
 
     private List<ViewPost> viewPostList = new ArrayList<>();
     private PostCallBack postClickedCallBack;
     private ViewBinderHelper mViewBinderHelper = new ViewBinderHelper();
-    SwipeRevealLayout swipeRevealLayout;
+     private SwipeRevealLayout swipeRevealLayout;
 
 
     public PostListAdapter(PostCallBack postClickedCallBack) {
@@ -42,34 +38,26 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostLi
 
     @Override
     public void onBindViewHolder(@NonNull PostListViewHolder holder, int position) {
+
         holder.postItemBinding.setViewpost(viewPostList.get(position));
 
-        mViewBinderHelper.bind(holder.postItemBinding.swipeReveal, Integer.toString(holder.postItemBinding.getViewpost().getId()));
-        mViewBinderHelper.setOpenOnlyOne(true);
+        setupSwipeReveal(holder);
 
-        holder.postItemBinding.constraintItemLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postClickedCallBack.onPostClicked(viewPostList.get(position), view);
-            }
+        holder.postItemBinding.constraintItemLayout.setOnClickListener(view -> postClickedCallBack.onPostClicked(viewPostList.get(position), view));
+        holder.postItemBinding.editPostButton.setOnClickListener(view -> postClickedCallBack.onEditButtonClicked(viewPostList.get(position),view));
+        holder.postItemBinding.deletePostButton.setOnClickListener(view -> {
+            postClickedCallBack.onDeleteButtonClicked(holder.postItemBinding.getViewpost(), view, holder);
+            viewPostList.remove(position);
         });
 
-        holder.postItemBinding.editPostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postClickedCallBack.onEditButtonClicked(viewPostList.get(position),view);
-            }
-        });
-        holder.postItemBinding.deletePostButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                postClickedCallBack.onDeleteButtonClicked(holder.postItemBinding.getViewpost(), view, holder);
-                viewPostList.remove(position);
-            }
-        });
+
+    }
+
+    private void setupSwipeReveal(@NonNull PostListViewHolder holder){
         swipeRevealLayout = holder.postItemBinding.swipeReveal;
         swipeRevealLayout.close(true);
-
+        mViewBinderHelper.bind(holder.postItemBinding.swipeReveal, Integer.toString(holder.postItemBinding.getViewpost().getId()));
+        mViewBinderHelper.setOpenOnlyOne(true);
     }
 
     @Override
@@ -81,10 +69,6 @@ public class PostListAdapter extends RecyclerView.Adapter<PostListAdapter.PostLi
     public void submitList(List<ViewPost> viewPostList){
         this.viewPostList = viewPostList;
         notifyDataSetChanged();
-    }
-
-    public List<ViewPost> getViewPostList() {
-        return viewPostList;
     }
 
     public class PostListViewHolder extends RecyclerView.ViewHolder{

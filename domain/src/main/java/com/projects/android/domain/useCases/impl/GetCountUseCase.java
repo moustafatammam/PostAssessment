@@ -12,6 +12,11 @@ import javax.inject.Inject;
 
 import io.reactivex.Observable;
 
+
+/**
+ * a class to get the count of items in the database to increment the model ID when inserting
+ * it to the database
+ */
 public class GetCountUseCase extends AbstractObservableUseCase<Integer, Void> {
 
     private PostRepository mPostRepository;

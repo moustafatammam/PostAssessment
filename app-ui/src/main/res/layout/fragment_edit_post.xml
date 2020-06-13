@@ -10,103 +10,102 @@
         app:behavior_hideable="true"
         app:behavior_peekHeight="56dp">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/create_screen_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:layout_marginTop="16dp"
-            android:fontFamily="sans-serif"
-            android:text="Edit Post"
-            android:textAlignment="viewStart"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/create_screen_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginTop="16dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/edit_post"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
-            android:id="@+id/create_title"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="30dp"
-            android:cursorVisible="true"
-            android:fontFamily="sans-serif"
-            android:maxLength="60"
-            android:hint="Title"
-            android:imeOptions="actionNext"
-            android:inputType="text"
-            android:nextFocusForward="@id/create_body"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/create_screen_title"
-            app:layout_constraintTop_toBottomOf="@+id/create_screen_title"
-            app:layout_constraintVertical_bias="0.063" />
+            <EditText
+                android:id="@+id/create_title"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="30dp"
+                android:cursorVisible="true"
+                android:fontFamily="sans-serif"
+                android:hint="@string/title_hint_edit_screen"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLength="60"
+                android:nextFocusForward="@id/create_body"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/create_screen_title"
+                app:layout_constraintTop_toBottomOf="@+id/create_screen_title"
+                app:layout_constraintVertical_bias="0.063" />
 
-        <EditText
-            android:id="@+id/create_body"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="30dp"
-            android:cursorVisible="true"
-            android:fontFamily="sans-serif"
-            android:hint="Description"
-            android:imeOptions="actionDone"
-            android:inputType="text"
-            android:nextFocusForward="@id/create_button"
-            android:textColor="@color/black"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/create_title"
-            app:layout_constraintTop_toBottomOf="@+id/create_title"
-            app:layout_constraintVertical_bias="0.116" />
+            <EditText
+                android:id="@+id/create_body"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="30dp"
+                android:cursorVisible="true"
+                android:fontFamily="sans-serif"
+                android:hint="@string/description_hint"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:nextFocusForward="@id/create_button"
+                android:textColor="@color/black"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="@+id/create_title"
+                app:layout_constraintTop_toBottomOf="@+id/create_title"
+                app:layout_constraintVertical_bias="0.116" />
 
-        <Button
-            android:id="@+id/create_button"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="48dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/button_view"
-            android:backgroundTint="@color/create_green"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center"
-            android:text="Update"
-            android:textColor="@color/white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/create_body"
-            app:layout_constraintVertical_bias="1.0" />
+            <Button
+                android:id="@+id/create_button"
+                android:layout_width="0dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/button_view"
+                android:backgroundTint="@color/create_green"
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:text="@string/update_button"
+                android:textColor="@color/white"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/create_body"
+                app:layout_constraintVertical_bias="1.0" />
 
-        <Button
-            android:id="@+id/exit_edit_screen_button"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="335dp"
-            android:layout_marginBottom="236dp"
-            android:background="@drawable/ic_close_24px"
-            app:layout_constraintBottom_toBottomOf="@+id/create_screen_title"
-            app:layout_constraintEnd_toEndOf="@+id/create_title"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/create_screen_title"
-            app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/exit_edit_screen_button"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="335dp"
+                android:layout_marginBottom="236dp"
+                android:background="@drawable/ic_close_24px"
+                app:layout_constraintBottom_toBottomOf="@+id/create_screen_title"
+                app:layout_constraintEnd_toEndOf="@+id/create_title"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/create_screen_title"
+                app:layout_constraintVertical_bias="0.0" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
 

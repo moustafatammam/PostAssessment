@@ -1,7 +1,5 @@
 package com.projects.android.cache;
 
-import android.util.Log;
-
 import com.projects.android.cache.database.PostDatabase;
 import com.projects.android.cache.mapper.CacheMapperImpl;
 import com.projects.android.cache.model.CachePost;
@@ -19,6 +17,10 @@ import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
+/**
+ * communicates with data layer it handles all the operations done from the data layer
+ * and using room dao to cache it to the database
+ */
 public class PostCacheImpl implements PostCache {
 
     private PostDatabase mPostDatabase;
@@ -33,9 +35,7 @@ public class PostCacheImpl implements PostCache {
     @Override
     public Completable savePost(DataPost dataPost) {
         return Completable.defer(() -> {
-            Log.d("add", "4");
             mPostDatabase.postDao().savePost(mCacheMapperImpl.mapToCached(dataPost));
-            Log.d("add", "3");
             return Completable.complete();
         });
     }
@@ -67,7 +67,6 @@ public class PostCacheImpl implements PostCache {
         return Completable.defer(() -> {
             CachePost cachePost = mCacheMapperImpl.mapToCached(dataPost);
             mPostDatabase.postDao().updatePost(cachePost.getTitle(), cachePost.getBody(), cachePost.getId());
-            Log.d("delete", "3");
             return Completable.complete();
         });
     }
@@ -87,9 +86,7 @@ public class PostCacheImpl implements PostCache {
     @Override
     public Observable<DataPost> getPostById(int id) {
         return Observable.just(mPostDatabase.postDao().getPostById(id))
-                .map(cachePost -> {
-                    return mCacheMapperImpl.mapFromCached(cachePost);
-                });
+                .map(cachePost -> mCacheMapperImpl.mapFromCached(cachePost));
     }
 
     @Override

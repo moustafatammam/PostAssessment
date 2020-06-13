@@ -9,7 +9,12 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.inject.Provider;
 
+
+/**
+ * a factory to create ViewModels and the created ViewModels can be injected in the fragment using dagger
+ */
 public class ViewModelFactory implements ViewModelProvider.Factory {
+
 
     private Map<Class<? extends ViewModel> , Provider<ViewModel>> viewModelMap;
 

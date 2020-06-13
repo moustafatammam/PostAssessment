@@ -7,6 +7,9 @@ import javax.inject.Inject;
 import io.reactivex.Scheduler;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
+/**
+ * a class to post data to the UI Thread
+ */
 public class UiThread implements PostExecutionThread {
 
     @Inject

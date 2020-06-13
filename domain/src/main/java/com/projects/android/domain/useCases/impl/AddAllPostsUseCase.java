@@ -12,7 +12,7 @@ import javax.inject.Inject;
 
 import io.reactivex.Completable;
 
-//useCase implementation to add a list of posts to PostRepository
+
 public class AddAllPostsUseCase extends AbstractCompletableUseCase<List<Post>> {
 
     private PostRepository mPostRepository;
@@ -23,6 +23,12 @@ public class AddAllPostsUseCase extends AbstractCompletableUseCase<List<Post>> {
         this.mPostRepository = mPostRepository;
     }
 
+
+    /**
+     *
+     * @param posts the model that will be inserted to the database
+     * @return a completable that check if the task is completed
+     */
     @Override
     public Completable buildCompletableUseCase(List<Post> posts) {
         return mPostRepository.insertAll(posts);

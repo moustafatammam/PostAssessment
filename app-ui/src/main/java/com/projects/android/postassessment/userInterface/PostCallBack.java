@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.projects.android.postassessment.model.ViewPost;
 
+/**
+ * a callBack for navigating between fragments for passing data
+ */
 public interface PostCallBack {
 
     void onPostClicked(ViewPost viewPost, View view);
