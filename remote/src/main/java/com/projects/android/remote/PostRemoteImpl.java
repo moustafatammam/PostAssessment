@@ -32,15 +32,13 @@ public class PostRemoteImpl implements PostRemote {
 
     @Override
     public Completable savePost(DataPost dataPost) {
-        Completable hamda = Completable.defer(() -> {
+         return Completable.defer(() -> {
             Log.d("add", "6");
             Log.d("add", mRemoteMapperImpl.mapToRemoteModel(dataPost).getTitle());
-            Completable complete = mPostService.savePost(mRemoteMapperImpl.mapToRemoteModel(dataPost));
+            mPostService.savePost(mRemoteMapperImpl.mapToRemoteModel(dataPost));
             Log.d("comlete", "6");
-            return complete;
+            return Completable.complete();
         });
-        Log.d("hamdad", "6");
-        return hamda;
     }
 
     @Override

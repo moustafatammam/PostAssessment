@@ -86,10 +86,8 @@ public class PostCacheImpl implements PostCache {
 
     @Override
     public Observable<DataPost> getPostById(int id) {
-        Log.d("asdsad", "asjabdcashhhhh");
         return Observable.just(mPostDatabase.postDao().getPostById(id))
                 .map(cachePost -> {
-                    Log.d("asdsad", cachePost.getTitle());
                     return mCacheMapperImpl.mapFromCached(cachePost);
                 });
     }

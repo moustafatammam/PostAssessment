@@ -34,10 +34,10 @@ public class PostDataRepository implements PostRepository {
 
     @Override
     public Completable insert(Post post) {
-        //Completable remoteSave = mPostDataStoreFactory.getPostRemoteDataStore().savePost(mDataMapperImpl.mapToDataModel(post));
+        Completable remoteSave = mPostDataStoreFactory.getPostRemoteDataStore().savePost(mDataMapperImpl.mapToDataModel(post));
         Completable cacheSave = mPostDataStoreFactory.getPostCacheDataStore().savePost(mDataMapperImpl.mapToDataModel(post));
         Log.d("repo", "insert");
-        return cacheSave;
+        return remoteSave.andThen(cacheSave);
     }
 
     @Override
@@ -48,18 +48,18 @@ public class PostDataRepository implements PostRepository {
 
     @Override
     public Completable delete(Post post) {
-        //Completable deleteRemote = mPostDataStoreFactory.getPostRemoteDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
-        //Completable deleteCache = mPostDataStoreFactory.getPostCacheDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
-        return mPostDataStoreFactory.getPostCacheDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
+        Completable deleteRemote = mPostDataStoreFactory.getPostRemoteDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
+        Completable deleteCache = mPostDataStoreFactory.getPostCacheDataStore().deletePost(mDataMapperImpl.mapToDataModel(post));
+        return deleteRemote.andThen(deleteCache);
     }
 
     @Override
     public Completable update(Post post) {
-        //Completable updateRemote = mPostDataStoreFactory.getPostRemoteDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
+        Completable updateRemote = mPostDataStoreFactory.getPostRemoteDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
         Log.d("delete", "1");
-        //Completable updateCache = mPostDataStoreFactory.getPostCacheDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
+        Completable updateCache = mPostDataStoreFactory.getPostCacheDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
         Log.d("delete", "2");
-        return mPostDataStoreFactory.getPostCacheDataStore().updatePost(mDataMapperImpl.mapToDataModel(post));
+        return updateRemote.andThen(updateCache);
     }
 
     @Override

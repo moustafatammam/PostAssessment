@@ -3,8 +3,11 @@ package com.projects.android.postassessment.userInterface.fragments;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,9 +38,12 @@ import com.projects.android.presentation.ViewModelFactory;
 import com.projects.android.presentation.viewModel.GetAllPostsViewModel;
 import com.projects.android.presentation.viewModel.UpdatePostViewModel;
 
+import java.lang.reflect.Field;
 import java.util.Objects;
 
 import javax.inject.Inject;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class EditPostFragment extends BottomSheetDialogFragment {
 
@@ -58,6 +64,36 @@ public class EditPostFragment extends BottomSheetDialogFragment {
         this.mViewModelFactory = mViewModelFactory;
         this.mViewMapperImpl = mViewMapperImpl;
     }
+
+    @Override
+    public void setupDialog(@NonNull Dialog dialog, int style) {
+        super.setupDialog(dialog, style);BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialog;
+        bottomSheetDialog.setContentView(R.layout.fragment_edit_post);
+
+        try {
+            Field behaviorField = bottomSheetDialog.getClass().getDeclaredField("behavior");
+            behaviorField.setAccessible(true);
+            final BottomSheetBehavior behavior = (BottomSheetBehavior) behaviorField.get(bottomSheetDialog);
+            behavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING){
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                }
+            });
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
     @Nullable
@@ -129,8 +165,17 @@ public class EditPostFragment extends BottomSheetDialogFragment {
 
         } else {
             ViewPost viewPost = new ViewPost(updateId, titleText, bodyText);
-            updateTask(viewPost);
-            Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
+
+            if(isInternetAvailable(getContext())) //returns true if internet available
+            {
+                updateTask(viewPost);
+                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
+            }
+            else
+            {
+                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_editPostFragment_to_postListFragment);
+                Toast.makeText(getContext(),"No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 
@@ -141,5 +186,30 @@ public class EditPostFragment extends BottomSheetDialogFragment {
                 Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    public static boolean isInternetAvailable(Context context)
+    {
+        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        if (info == null)
+        {
+            Log.d(TAG,"no internet connection");
+            return false;
+        }
+        else
+        {
+            if(info.isConnected())
+            {
+                Log.d(TAG," internet connection available...");
+                return true;
+            }
+            else
+            {
+                Log.d(TAG," internet connection");
+                return true;
+            }
+
+        }
     }
 }

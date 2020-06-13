@@ -1,7 +1,11 @@
 package com.projects.android.postassessment.userInterface.fragments;
 
+import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +22,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import com.projects.android.cache.PostCacheImpl;
 import com.projects.android.postassessment.R;
@@ -27,7 +33,11 @@ import com.projects.android.postassessment.model.ViewPost;
 import com.projects.android.presentation.ViewModelFactory;
 import com.projects.android.presentation.viewModel.AddPostViewModel;
 
+import java.lang.reflect.Field;
+
 import javax.inject.Inject;
+
+import static androidx.constraintlayout.widget.Constraints.TAG;
 
 public class CreatePostFragment extends BottomSheetDialogFragment {
 
@@ -52,6 +62,36 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
     public CreatePostFragment(ViewModelFactory mViewModelFactory, ViewMapperImpl mViewMapperImpl) {
         this.mViewModelFactory = mViewModelFactory;
         this.mViewMapperImpl = mViewMapperImpl;
+    }
+
+    @Override
+    public void setupDialog(@NonNull Dialog dialog, int style) {
+        super.setupDialog(dialog, style);
+        BottomSheetDialog bottomSheetDialog = (BottomSheetDialog) dialog;
+        bottomSheetDialog.setContentView(R.layout.fragment_create_post);
+
+        try {
+            Field behaviorField = bottomSheetDialog.getClass().getDeclaredField("behavior");
+            behaviorField.setAccessible(true);
+            final BottomSheetBehavior behavior = (BottomSheetBehavior) behaviorField.get(bottomSheetDialog);
+            behavior.addBottomSheetCallback(new BottomSheetBehavior.BottomSheetCallback() {
+
+                @Override
+                public void onStateChanged(@NonNull View bottomSheet, int newState) {
+                    if (newState == BottomSheetBehavior.STATE_DRAGGING){
+                        behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+                    }
+                }
+
+                @Override
+                public void onSlide(@NonNull View bottomSheet, float slideOffset) {
+                }
+            });
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -127,8 +167,18 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
             Log.d("count", Integer.toString(count) );
 
             ViewPost viewPost = new ViewPost(++count, titleText, bodyText);
-            addPost(viewPost);
-            Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_createPostFragment_to_postListFragment);
+
+            if(isInternetAvailable(getContext())) //returns true if internet available
+            {
+                addPost(viewPost);
+                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_createPostFragment_to_postListFragment);
+            }
+            else
+            {
+                Navigation.findNavController(getActivity(), R.id.nav_host).navigate(R.id.action_createPostFragment_to_postListFragment);
+                Toast.makeText(getContext(),"No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+
         }
     }
     private void setCount(int count){
@@ -153,5 +203,31 @@ public class CreatePostFragment extends BottomSheetDialogFragment {
                 Toast.makeText(getContext(), s, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public static boolean isInternetAvailable(Context context)
+    {
+        NetworkInfo info = (NetworkInfo) ((ConnectivityManager)
+                context.getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
+
+        if (info == null)
+        {
+            Log.d(TAG,"no internet connection");
+            return false;
+        }
+        else
+        {
+            if(info.isConnected())
+            {
+                Log.d(TAG," internet connection available...");
+                return true;
+            }
+            else
+            {
+                Log.d(TAG," internet connection");
+                return true;
+            }
+
+        }
     }
 }
